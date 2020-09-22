@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Home from './Home';
 import About from './About';
 import Users from './Users';
-import { BrowserRouter, Link, Route } from 'react-router-dom';
+import { BrowserRouter, Link, Route, Switch, Redirect } from 'react-router-dom';
 
 class App extends Component {
   render() {
@@ -18,10 +18,15 @@ class App extends Component {
           <li>
             <Link to="/users">Users</Link>
           </li>
+          <li>
+            <Link to="/strict-access">Strict Access</Link>
+          </li>
         </ul>
-        <Route path="/about" component={About} />
-        <Route path="/users" component={Users} />
-        <Route exact path="/" component={Home} />
+        <Switch>
+          <Route path="/users/:id" render={(props) => <Users {...props} greetingMessage="Good Morning" />} />
+          <Route path="/about" component={About} />
+          <Route exact path="/" component={Home} />
+        </Switch>
       </BrowserRouter>
       
     );
