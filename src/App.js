@@ -2,10 +2,15 @@ import React, { Component } from 'react';
 import Home from './Home';
 import About from './About';
 import Users from './Users';
+import StrictAccess from './StrictAccess';
 import { BrowserRouter, Link, Route, Switch, Redirect } from 'react-router-dom';
 
 class App extends Component {
   render() {
+    let wrongInfo = true;
+    const username = 'João';
+    const password = 1234;
+    if (username === 'João' && password === 1234) wrongInfo = false;
     return (
       <BrowserRouter>
         <ul>
@@ -24,6 +29,9 @@ class App extends Component {
         </ul>
         <Switch>
           <Route path="/users/:id" render={(props) => <Users {...props} greetingMessage="Good Morning" />} />
+          <Route path="/strict-access">
+            { wrongInfo ? <Redirect to="/" /> : <StrictAccess userName={username} password={password} /> }
+          </Route>
           <Route path="/about" component={About} />
           <Route exact path="/" component={Home} />
         </Switch>
